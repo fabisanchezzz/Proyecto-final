@@ -45,6 +45,14 @@ public class User {
         return this.Email;
     }
 
+    public String getUsername() {
+    return this.Username;
+    }
+
+    public String getUserpassword() {
+    return this.Password;
+    }
+
     public boolean checkPassword(String password) {
         return this.Password.equals(password);
     }
