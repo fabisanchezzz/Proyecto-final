@@ -108,6 +108,88 @@ public class DatabaseService {
         }
     }
 
+
+
+
+
+
+
+
+
+
+    public List<Nota> getAllNotas() {
+        try {
+            // Replace 'app_log' with your actual table name and adjust the query as needed
+            String query = "SELECT * FROM notas";
+            List<Map<String, Object>> resultProducts = jdbcTemplate.queryForList(query);
+            List<Nota> notas = new ArrayList<>();
+
+            for (Map<String, Object> row : resultProducts) {
+                int NoteID = (int) row.get("NoteID");
+                int UserID = (int) row.get("UserID");
+                String Title = (String) row.get("Title");
+                String Content = (String) row.get("Content");
+
+                Nota nota = new Nota (NoteID, UserID, Title, Content);
+                notas.add(nota);
+            }
+            return notas;
+        } catch (Exception e) {
+            // Handle exceptions if needed
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public Nota getNota(int id) {
+        System.out.println("logId = " + id);
+        try {
+            String query = "SELECT * FROM notas WHERE NoteID = ?";
+
+            return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
+                int NoteID = (int) row.get("NoteID");
+                int UserID = (int) row.get("UserID");
+                String Title = (String) row.get("Title");
+                String Content = (String) row.get("Content");
+
+                return new new Nota (NoteID, UserID, Title, Content);
+            }, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void updateNota(Nota nota) {
+        try {
+            String query = "UPDATE notas SET UserID = ?, Title = ?, Content = ? WHERE NoteID = ?";
+            jdbcTemplate.update(query, nota.getUserID(),nota.getTitle(), nota.getContent(), nota.getNoteID());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exceptions if needed
+        }
+    }
+    public void insertNota(Nota nota) {
+        try {
+            String query = "INSERT notas SET UserID = ?, Title = ?, Content = ? ";
+            jdbcTemplate.update(query, nota.getUserID(),nota.getTitle(), nota.getContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exceptions if needed
+        }
+    }
+
+    public int deleteProducto(int id) {
+        try {
+            String query = "DELETE FROM productos WHERE id_producto = ?";
+            jdbcTemplate.update(query, id);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+            // Handle exceptions if needed
+        }
+    }
+
     
 }
 
