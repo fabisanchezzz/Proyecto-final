@@ -20,14 +20,14 @@ public class DatabaseService {
         try {
             // Replace 'app_log' with your actual table name and adjust the query as needed
             String query = "SELECT * FROM users";
-            List<Map<String, Object>> resultProducts = jdbcTemplate.queryForList(query);
+            List<Map<String, Object>> resultNotas = jdbcTemplate.queryForList(query);
             List<User> users = new ArrayList<>();
 
-            for (Map<String, Object> row : resultProducts) {
-                int userID = (int)rs.getInt("UserID");
-                String username = rs.getString("Username");
-                String password = rs.getString("Password");
-                String email = rs.getString("Email");
+            for (Map<String, Object> row : resultNotas) {
+                int userID = (int) row.get("UserID");
+                String username =(String) row.get("Username");
+                String password =(String) row.get("Password");
+                String email = (String) row.get("Email");
                 User user = new User(userID,username,email,password);
                 users.add(user);
             }
@@ -146,12 +146,12 @@ public class DatabaseService {
             String query = "SELECT * FROM notas WHERE NoteID = ?";
 
             return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
-                int NoteID = (int) row.get("NoteID");
-                int UserID = (int) row.get("UserID");
-                String Title = (String) row.get("Title");
-                String Content = (String) row.get("Content");
+                int NoteID = rs.getInt("NoteID");
+                int UserID = (int) rs.getInt("UserID");
+                String Title = rs.getString("Title");
+                String Content = rs.getString("Content");
 
-                return new new Nota (NoteID, UserID, Title, Content);
+                return new Nota (NoteID, UserID, Title, Content);
             }, id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,9 +178,9 @@ public class DatabaseService {
         }
     }
 
-    public int deleteProducto(int id) {
+    public int deleteNota(int id) {
         try {
-            String query = "DELETE FROM productos WHERE id_producto = ?";
+            String query = "DELETE FROM notas WHERE NoteID = ?";
             jdbcTemplate.update(query, id);
             return 1;
         } catch (Exception e) {
