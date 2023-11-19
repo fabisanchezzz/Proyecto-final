@@ -42,13 +42,13 @@ public class DatabaseService {
      public User authenticateUser(String username, String password) {
         System.out.println("logId = " + username);
         try {
-            String query = "SELECT * FROM proyecto.users WHERE Username = ? and Password =?";
+            String query = "SELECT * FROM proyecto.users WHERE UserName = ? and UserPassword =?";
 
             return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
                 int userID = (int)rs.getInt("UserID");
-                String user_name = rs.getString("Username");
-                String user_password = rs.getString("Password");
-                String email = rs.getString("Email");
+                String user_name = rs.getString("UserName");
+                String user_password = rs.getString("UserPassword");
+                String email = rs.getString("UserEmail");
               //   public User( String username,String email, String password) {
         
                 return new User(userID, user_name,email, user_password);
@@ -62,13 +62,13 @@ public class DatabaseService {
     public User getUser(int id) {
         System.out.println("logId = " + id);
         try {
-            String query = "SELECT * FROM proyecto.users WHERE UserID = ?";
+            String query = "SELECT * FROM users WHERE UserID = ?";
 
             return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
-                int userID = (int)rs.getInt("UserID");
-                String user_name = rs.getString("Username");
-                String user_password = rs.getString("Password");
-                String email = rs.getString("Email");
+                int userID = rs.getInt("UserID");
+                String user_name = rs.getString("UserName");
+                String user_password = rs.getString("UserPassword");
+                String email = rs.getString("User Email");
                 return new User(userID, user_name,email, user_password);
             }, id);
         } catch (Exception e) {
@@ -170,7 +170,7 @@ public class DatabaseService {
     }
     public void insertNota(Nota nota) {
         try {
-            String query = "INSERT notas SET UserID = ?, Title = ?, Content = ? ";
+            String query = "INSERT  proyecto.notas SET UserID = ?, Title = ?, Content = ? ";
             jdbcTemplate.update(query, nota.getUserID(),nota.getTitle(), nota.getContent());
         } catch (Exception e) {
             e.printStackTrace();
