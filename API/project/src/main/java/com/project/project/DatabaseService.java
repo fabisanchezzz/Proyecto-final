@@ -62,7 +62,7 @@ public class DatabaseService {
     public User getUser(int id) {
         System.out.println("logId = " + id);
         try {
-            String query = "SELECT * FROM users WHERE UserID = ?";
+            String query = "SELECT * FROM proyecto.users WHERE UserID = ?";
 
             return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
                 int userID = (int)rs.getInt("UserID");
@@ -88,7 +88,7 @@ public class DatabaseService {
     }
     public void insertUser(User user) {
         try {
-            String query = "INSERT users SET UserName = ?, UserPassword = ?, UserEmail = ? ";
+            String query = "INSERT  users SET UserName = ?, UserPassword = ?, UserEmail = ? ";
             jdbcTemplate.update(query, user.getUsername(),user.getUserpassword(),user.getEmail());
         } catch (Exception e) {
             e.printStackTrace();

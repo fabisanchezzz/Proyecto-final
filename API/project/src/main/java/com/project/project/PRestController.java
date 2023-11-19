@@ -30,7 +30,7 @@ public class PRestController {
     public List<Nota> allN() {
         return databaseService.getAllNotas() ;
     }
-    @GetMapping("/Ubyid")
+    @GetMapping("/Ubyid") /////
     public User allUI(int id) {
         return databaseService.getUser(id) ;
     } 
