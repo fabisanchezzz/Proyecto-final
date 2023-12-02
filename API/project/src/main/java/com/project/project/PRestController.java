@@ -69,8 +69,13 @@ public class PRestController {
     public User loginUser(String username, String password) {
 
     User  tmpUser =  databaseService.authenticateUser(username,password) ;
+    if (tmpUser == null){
+        return null;
+    }
+    else {
     tmpUser.setJTW();
     return tmpUser;
+}
     }
 
 
