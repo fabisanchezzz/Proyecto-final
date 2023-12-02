@@ -41,18 +41,23 @@ public class PRestController {
    
 
     @PutMapping("/UpdateUbyid")
-    public void updateU(String username,String email, String password, int id) {
+    public void updateU(String username,String email, String password, int id, String token) {
+        if (valid(token, id)== false){
+            return;
+        } else {
         User user = new User(id, username, email,password );
         databaseService.updateUser(user) ;
-    }
+    }}
 
     @PutMapping("/UpdateNbyid")
-    public void updateN(int UserID, String Title, String Content, int id) {
-
+    public void updateN(int UserID, String Title, String Content, int id, String token) {
+        if (valid(token, UserID)== false){
+            return;
+        } else {
         Nota nota = new Nota(id, UserID, Title,Content );
-        databaseService.updateNota(nota) ;
+        databaseService.updateNota(nota);
     }
-    
+}
     @PostMapping("/newuser")
     public void insertU(String username,String email, String password) {
         User user = new User(0, username, email, password);
@@ -60,10 +65,14 @@ public class PRestController {
     }
 
     @PostMapping("/newnote")
-    public void insertN(int UserID, String Title, String Content) {
+    public void insertN(int UserID, String Title, String Content, String token) {
+        if (valid(token, UserID)== false){
+            return;
+        } else {
         Nota nota = new Nota(0, UserID, Title, Content);
         databaseService.insertNota(nota) ;
     }
+}
 
     @PostMapping("/login")
     public User loginUser(String username, String password) {
@@ -80,11 +89,27 @@ public class PRestController {
 
 
     @DeleteMapping("/DeleteUbyid")
-    public void deleteU(int id) {
-        databaseService.deleteUser(id) ;
-    }
+    public void deleteU(int id, String token) {
+        if (valid(token, id)== false){
+            return;
+        } else {
+        databaseService.deleteNotaByU(id);
+        databaseService.deleteUser(id);
+    }}
+
     @DeleteMapping("/DeleteNbyid")
-    public void deleteN(int id) {
+    public void deleteN(int id, String token) {
+        Nota nota = databaseService.getNota(id);
+          if (valid(token, nota.getUserID())== false){
+            return;
+        } else {
         databaseService.deleteNota(id) ;
+    }}
+
+    private boolean valid(String token, int UserID) {
+        User user = databaseService.getUser(UserID);
+        // Use equals() for string comparison
+        return token.equals(user.getJWT());
     }
-}
+    
+}    

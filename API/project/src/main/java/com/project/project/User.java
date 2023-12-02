@@ -59,6 +59,7 @@ public class User {
 
     public void setPassword(String password) {
         this.Password = password;
+        setJTW();
     }   
 
     public void setJTW() {
@@ -87,6 +88,10 @@ public class User {
             e.printStackTrace();
             return null; // Handle the exception appropriately in a real-world scenario
         }
+    }
+
+    public String getJWT() {
+    return this.JWT;
     }
     //Review//
 

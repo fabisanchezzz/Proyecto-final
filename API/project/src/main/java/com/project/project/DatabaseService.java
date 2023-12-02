@@ -190,6 +190,18 @@ public class DatabaseService {
         }
     }
 
+        public int deleteNotaByU(int id) {
+        try {
+            String query = "DELETE FROM notas WHERE UserID = ?";
+            jdbcTemplate.update(query, id);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+            // Handle exceptions if needed
+        }
+    }
+
     
 }
 
