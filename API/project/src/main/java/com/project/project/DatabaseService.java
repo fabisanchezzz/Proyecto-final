@@ -68,7 +68,7 @@ public class DatabaseService {
                 int userID = rs.getInt("UserID");
                 String user_name = rs.getString("UserName");
                 String user_password = rs.getString("UserPassword");
-                String email = rs.getString("User Email");
+                String email = rs.getString("UserEmail");
                 return new User(userID, user_name,email, user_password);
             }, id);
         } catch (Exception e) {
