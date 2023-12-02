@@ -1,0 +1,28 @@
+/* styles.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.6;
+    color: #333;
+}
+
+h1, h2 {
+    color: #008080;
+}
+
+p {
+    color: #666;
+}
+
+code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border: 1px solid #ddd;
+    font-family: 'Courier New', monospace;
+}
+
+section {
+    margin-bottom: 20px;
+}
