@@ -19,15 +19,15 @@ public class DatabaseService {
      public List<User> getAllUsers() {
         try {
             // Replace 'app_log' with your actual table name and adjust the query as needed
-            String query = "SELECT * FROM users";
+            String query = "SELECT * FROM proyecto.users";
             List<Map<String, Object>> resultNotas = jdbcTemplate.queryForList(query);
             List<User> users = new ArrayList<>();
 
             for (Map<String, Object> row : resultNotas) {
                 int userID = (int) row.get("UserID");
                 String username =(String) row.get("Username");
-                String password =(String) row.get("Password");
-                String email = (String) row.get("Email");
+                String password =(String) row.get("UserPassword");
+                String email = (String) row.get("UserEmail");
                 User user = new User(userID,username,email,password);
                 users.add(user);
             }
@@ -62,7 +62,7 @@ public class DatabaseService {
     public User getUser(int id) {
         System.out.println("logId = " + id);
         try {
-            String query = "SELECT * FROM users WHERE UserID = ?";
+            String query = "SELECT * FROM proyecto.users WHERE UserID = ?";
 
             return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
                 int userID = rs.getInt("UserID");
@@ -79,7 +79,7 @@ public class DatabaseService {
 
     public void updateUser(User user) {
         try {
-            String query = "UPDATE users SET UserName = ?, UserPassword = ?, UserEmail = ? WHERE UserID = ?";
+            String query = "UPDATE proyecto.users SET UserName = ?, UserPassword = ?, UserEmail = ? WHERE UserID = ?";
             jdbcTemplate.update(query, user.getUsername(), user.getUserpassword(), user.getEmail() , user.getUserID());
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,6 +181,18 @@ public class DatabaseService {
     public int deleteNota(int id) {
         try {
             String query = "DELETE FROM notas WHERE NoteID = ?";
+            jdbcTemplate.update(query, id);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+            // Handle exceptions if needed
+        }
+    }
+
+        public int deleteNotaByU(int id) {
+        try {
+            String query = "DELETE FROM notas WHERE UserID = ?";
             jdbcTemplate.update(query, id);
             return 1;
         } catch (Exception e) {
