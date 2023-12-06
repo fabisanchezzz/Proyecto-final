@@ -12,32 +12,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class DatabaseService {
 
+    public DatabaseService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-     public List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         try {
-            // Replace 'app_log' with your actual table name and adjust the query as needed
-            String query = "SELECT * FROM proyecto.users";
-            List<Map<String, Object>> resultNotas = jdbcTemplate.queryForList(query);
+            String query = "SELECT UserID, UserName, UserEmail FROM proyecto.users";
+            List<Map<String, Object>> resultUsers = jdbcTemplate.queryForList(query);
             List<User> users = new ArrayList<>();
-
-            for (Map<String, Object> row : resultNotas) {
+    
+            for (Map<String, Object> row : resultUsers) {
                 int userID = (int) row.get("UserID");
-                String username =(String) row.get("Username");
-                String password =(String) row.get("UserPassword");
+                String username = (String) row.get("UserName");
                 String email = (String) row.get("UserEmail");
-                User user = new User(userID,username,email,password);
+    
+                // Use constructor without password to exclude it from the User object
+                User user = new User(userID, username, email);
                 users.add(user);
             }
+    
             return users;
         } catch (Exception e) {
-            // Handle exceptions if needed
             e.printStackTrace();
             return null;
         }
     }
+    
+    
+    
 
      public User authenticateUser(String username, String password) {
         System.out.println("logId = " + username);
@@ -62,14 +68,13 @@ public class DatabaseService {
     public User getUser(int id) {
         System.out.println("logId = " + id);
         try {
-            String query = "SELECT * FROM proyecto.users WHERE UserID = ?";
+            String query = "SELECT UserID, UserName, UserEmail FROM proyecto.users WHERE UserID = ?";
 
             return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
                 int userID = rs.getInt("UserID");
                 String user_name = rs.getString("UserName");
-                String user_password = rs.getString("UserPassword");
                 String email = rs.getString("UserEmail");
-                return new User(userID, user_name,email, user_password);
+                return new User(userID, user_name,email);
             }, id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +93,7 @@ public class DatabaseService {
     }
     public void insertUser(User user) {
         try {
-            String query = "INSERT  users SET UserName = ?, UserPassword = ?, UserEmail = ? ";
+            String query = "INSERT  proyecto.users SET UserName = ?, UserPassword = ?, UserEmail = ? ";
             jdbcTemplate.update(query, user.getUsername(),user.getUserpassword(),user.getEmail());
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,7 +125,7 @@ public class DatabaseService {
     public List<Nota> getAllNotas() {
         try {
             // Replace 'app_log' with your actual table name and adjust the query as needed
-            String query = "SELECT * FROM notas";
+            String query = "SELECT * FROM proyecto.notas";
             List<Map<String, Object>> resultProducts = jdbcTemplate.queryForList(query);
             List<Nota> notas = new ArrayList<>();
 
@@ -199,6 +204,23 @@ public class DatabaseService {
             e.printStackTrace();
             return 0;
             // Handle exceptions if needed
+        }
+    }
+
+    public User getUserL(int id) {
+        System.out.println("logId = " + id);
+        try {
+            String query = "SELECT * FROM proyecto.users WHERE UserID = ?";
+            return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
+                int userID = rs.getInt("UserID");
+                String user_name = rs.getString("UserName");
+                String password = rs.getString("UserPassword");
+                String email = rs.getString("UserEmail");
+                return new User(userID, user_name,email, password);
+            }, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

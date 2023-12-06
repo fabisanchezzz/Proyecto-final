@@ -2,25 +2,33 @@ package com.project.project;
 
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
- 
+import java.util.Objects;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class User {
 
+
     private int UserID;
     private String  Username;
     private String Email;
     private String Password;
     private String JWT;
-    private String mySecreString= "unPassword Super Fuerte";
+    private String mySecreString= "Encriptado ProyectoFinal";
     public User() {
         this.UserID = 0;
         this.Username = "";
         this.Email = "";
         this.Password = "";
     }
+
+        public User(int userID,String username,String email) {
+        this.UserID = userID;
+        this.Username = username;
+        this.Email = email;
+    }
+
 
     public User(int userID,String username,String email, String password) {
         this.UserID = userID;
@@ -86,14 +94,38 @@ public class User {
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            return null; // Handle the exception appropriately in a real-world scenario
+            return null; 
         }
     }
 
     public String getJWT() {
     return this.JWT;
     }
-    //Review//
+ 
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return Objects.equals(Username, user.Username) &&
+               Objects.equals(Email, user.Email) &&
+               Objects.equals(Password, user.Password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Username, Email, Password);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "username='" + Username + '\'' +
+               ", email='" + Email + '\'' +
+               ", password='" + Password + '\'' +
+               '}';
+    }
 
     
 }

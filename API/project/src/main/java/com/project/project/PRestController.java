@@ -3,44 +3,45 @@ package com.project.project;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api")
 public class PRestController {
     @Autowired
-    private DatabaseService databaseService; // Inject DatabaseService here
-
+    private DatabaseService databaseService; 
 
     @GetMapping 
     public String hello() {
         return "Hello, world!";
     }
-
-    @GetMapping("/allUsers")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/all/Users")
     public List<User> allU() {
         return databaseService.getAllUsers() ;
     }
-    @GetMapping("/allNotes")
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/all/Notes")
     public List<Nota> allN() {
         return databaseService.getAllNotas() ;
     }
-    @GetMapping("/Ubyid") /////
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/id/User") /////
     public User allUI(int id) {
         return databaseService.getUser(id) ;
     } 
-    @GetMapping("/Nbyid")
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/id/Note")
     public Nota allNI(int id) {
         return databaseService.getNota(id) ;
     }     
    
-
-    @PutMapping("/UpdateUbyid")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/Update/User")
     public void updateU(String username,String email, String password, int id, String token) {
         if (valid(token, id)== false){
             return;
@@ -49,7 +50,8 @@ public class PRestController {
         databaseService.updateUser(user) ;
     }}
 
-    @PutMapping("/UpdateNbyid")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/Update/Note")
     public void updateN(int UserID, String Title, String Content, int id, String token) {
         if (valid(token, UserID)== false){
             return;
@@ -58,13 +60,16 @@ public class PRestController {
         databaseService.updateNota(nota);
     }
 }
-    @PostMapping("/newuser")
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/new/User")
     public void insertU(String username,String email, String password) {
         User user = new User(0, username, email, password);
         databaseService.insertUser(user) ;
     }
 
-    @PostMapping("/newnote")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/new/Note")
     public void insertN(int UserID, String Title, String Content, String token) {
         if (valid(token, UserID)== false){
             return;
@@ -73,7 +78,7 @@ public class PRestController {
         databaseService.insertNota(nota) ;
     }
 }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public User loginUser(String username, String password) {
 
@@ -87,8 +92,8 @@ public class PRestController {
 }
     }
 
-
-    @DeleteMapping("/DeleteUbyid")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("/Delete/User")
     public void deleteU(int id, String token) {
         if (valid(token, id)== false){
             return;
@@ -97,7 +102,8 @@ public class PRestController {
         databaseService.deleteUser(id);
     }}
 
-    @DeleteMapping("/DeleteNbyid")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("/Delete/Note")
     public void deleteN(int id, String token) {
         Nota nota = databaseService.getNota(id);
           if (valid(token, nota.getUserID())== false){
@@ -107,8 +113,7 @@ public class PRestController {
     }}
 
     private boolean valid(String token, int UserID) {
-        User user = databaseService.getUser(UserID);
-        // Use equals() for string comparison
+        User user = databaseService.getUserL(UserID);
         return token.equals(user.getJWT());
     }
     
