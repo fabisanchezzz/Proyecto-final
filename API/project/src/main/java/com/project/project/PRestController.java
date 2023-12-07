@@ -116,5 +116,13 @@ public class PRestController {
         User user = databaseService.getUserL(UserID);
         return token.equals(user.getJWT());
     }
+
+    //Metodo admin.
     
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/all/Users/admin")
+    public List<User> allUserAdmin() {
+        return databaseService.getAllUsersAdmin() ;
+    }
+
 }    
