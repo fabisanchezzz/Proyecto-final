@@ -1,5 +1,7 @@
 package com.project.project;
 
+import java.util.Objects;
+
 public class Nota {
     private int NoteID;
     private int UserID;
@@ -10,6 +12,11 @@ public class Nota {
 
     public Nota(int NoteID, int UserID, String Title, String Content) {
         this.NoteID = NoteID;
+        this.UserID = UserID;
+        this.Title = Title;
+        this.Content = Content;
+    }
+       public Nota( int UserID, String Title, String Content) {
         this.UserID = UserID;
         this.Title = Title;
         this.Content = Content;
@@ -47,6 +54,29 @@ public class Nota {
         this.Content = Content;
     }
 
-    // toString
+ @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Nota nota = (Nota) obj;
+        return Objects.equals(UserID, nota.UserID) &&
+               Objects.equals(Title, nota.Title) &&
+               Objects.equals(Content, nota.Content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(UserID, Title, Content);
+    }
+
+    @Override
+    public String toString() {
+        return "Nota{" +
+               "UserID='" + UserID + '\'' +
+               ", Title='" + Title + '\'' +
+               ", Content='" + Content + '\'' +
+               '}';
+    }
+
     
 }

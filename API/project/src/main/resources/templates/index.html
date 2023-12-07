@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -10,69 +10,95 @@
 
 <body>
 
-    <h1>RestController API Documentation</h1>
-
-    <h2>Integrantes: Javier Garcia, Armando Montiel, Leandro Rúa</h2>
-
-    <h2>/api (GET)</h2>
-    <p>
-        <strong>Description:</strong> Returns a simple greeting "Hello, world!".
-    </p>
-
-    <h2>/api/allUsers (GET)</h2>
-    <p>
-        <strong>Description:</strong> Returns a list of all users stored in the database.
-    </p>
-
-    <h2>/api/allNotes (GET)</h2>
-    <p>
-        <strong>Description:</strong> Returns a list of all notes stored in the database.
-    </p>
-
-    <h2>/api/Ubyid/{userId} (GET)</h2>
-    <p>
-        <strong>Description:</strong> Returns a specific user based on the provided ID.
-    </p>
-
-    <h2>/api/Nbyid/{noteId} (GET)</h2>
-    <p>
-        <strong>Description:</strong> Returns a specific note based on the provided ID.
-    </p>
-
-    <h2>/api/UpdateUbyid/{userId} (PUT)</h2>
-    <p>
-        <strong>Description:</strong> Updates the information of a specific user based on the provided ID.
-    </p>
-
-    <h2>/api/UpdateNbyid/{noteId} (PUT)</h2>
-    <p>
-        <strong>Description:</strong> Updates the information of a specific note based on the provided ID.
-    </p>
-
-    <h2>/api/newuser (POST)</h2>
-    <p>
-        <strong>Description:</strong> Inserts a new user into the database.
-    </p>
-
-    <h2>/api/newnote (POST)</h2>
-    <p>
-        <strong>Description:</strong> Inserts a new note into the database.
-    </p>
-
-    <h2>/api/login (POST)</h2>
-    <p>
-        <strong>Description:</strong> Authenticates a user based on the provided username and password, and generates a JWT token for the authenticated user.
-    </p>
-
-    <h2>/api/DeleteUbyid/{userId} (DELETE)</h2>
-    <p>
-        <strong>Description:</strong> Deletes a specific user from the database based on the provided ID.
-    </p>
-
-    <h2>/api/DeleteNbyid/{noteId} (DELETE)</h2>
-    <p>
-        <strong>Description:</strong> Deletes a specific note from the database based on the provided ID.
-    </p>
+    <div class="method">
+        <h1>Guía de Métodos para RestController</h1>
+        <h2>Integrantes: Javier Garcia, Armando Montiel, Leandro Rúa</h2>
+    </div>
+    <p></p>
+    <p></p>
+    <div class="method">
+        <h2>"/api" (GET)</h2>
+        <p>Descripción: Retorna un saludo simple "Hello, world!".</p>
+        <p></p>
+        <p>Keys: Ninguna</p>
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/all/Users" (GET)</h2>
+        <p>Descripción: Retorna una lista de todos los usuarios almacenados en la base de datos.</p>
+        <p></p>
+        <p>Keys: Ninguna</p>
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/all/Notes" (GET)</h2>
+        <p>Descripción: Retorna una lista de todas las notas almacenadas en la base de datos.</p>
+        <p></p>
+        <p>Keys: Ninguna</p>
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/id/User" (GET)</h2>
+        <p>Descripción: Retorna un usuario específico según el ID proporcionado.</p>
+        <p></p>
+        <p>Keys: id</p>
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/id/Note" (GET)</h2>
+        <p>Descripción: Retorna una nota específica según el ID proporcionado.</p>
+        <p></p>
+        <p>Keys: id</p>
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/Update/User" (PUT)</h2>
+        <p>Descripción: Actualiza la información de un usuario específico según el ID proporcionado.</p>
+        <p></p>
+        <p>Keys: username, email, password, id, token</p>
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/Update/Note" (PUT)</h2>
+        <p>Descripción: Actualiza la información de una nota específica según el ID proporcionado.</p>
+        <p></p>
+        <p>Keys: UserID, Title, Content, id, token</p>    
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/new/User" (POST)</h2>
+        <p>Descripción: Inserta un nuevo usuario en la base de datos.</p>
+        <p></p>
+        <p>Keys: username, email, password</p>  
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/new/Note" (POST)</h2>
+        <p>Descripción: Inserta una nueva nota en la base de datos.</p>
+        <p></p>
+        <p>Keys: UserID, Title, Content, token</p>  
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/login" (POST)</h2>
+        <p>Descripción: Autentica a un usuario según el nombre de usuario y la contraseña proporcionados, y genera un token JWT para el usuario autenticado.</p>
+        <p></p>
+        <p>Keys: username, password</p>  
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/Delete/User" (DELETE)</h2>
+        <p>Descripción: Elimina un usuario específico de la base de datos según el ID proporcionado.</p>
+        <p></p>
+        <p>Keys: id, token</p>  
+    </div>
+    <p></p>
+    <div class="method">
+        <h2>"/api/Delete/Note" (DELETE)</h2>
+        <p>Descripción: Elimina una nota específica de la base de datos según el ID proporcionado.</p>
+        <p></p>
+        <p>Keys: id, token</p>  
+    </div>
 
 </body>
 
