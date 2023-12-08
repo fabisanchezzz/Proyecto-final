@@ -224,6 +224,30 @@ public class DatabaseService {
         }
     }
 
+    public List<User> getAllUsersAdmin() {
+        try {
+            String query = "SELECT * FROM proyecto.users";
+            List<Map<String, Object>> resultUsers = jdbcTemplate.queryForList(query);
+            List<User> users = new ArrayList<>();
     
+            for (Map<String, Object> row : resultUsers) {
+                int userID = (int) row.get("UserID");
+                String username = (String) row.get("UserName");
+                String email = (String) row.get("UserEmail");
+                String password = (String) row.get("UserPassword");
+    
+                // Use constructor without password to exclude it from the User object
+                User user = new User(userID, username, email, password);
+                users.add(user);
+            }
+    
+            return users;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }
 
